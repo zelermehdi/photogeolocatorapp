@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails de la Photo</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto mt-8">
@@ -38,6 +40,8 @@
             <div class="px-6 py-4 border-b border-gray-200">
                 <h2 class="text-xl font-bold mb-2">Détails de l'adresse</h2>
             </div>
+            <div id="map" style="height: 400px;"></div>
+
             <div class="px-6 py-4">
                 <h3 class="text-lg font-semibold mb-2">{{ $data['addressDetails']['title'] }}</h3>
                 <p>{{ $data['addressDetails']['address']['label'] }}</p>
@@ -54,5 +58,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([{{ $data['photo']['latitude'] }}, {{ $data['photo']['longitude'] }}], 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+    
+        var marker = L.marker([{{ $data['photo']['latitude'] }}, {{ $data['photo']['longitude'] }}]).addTo(map);
+        marker.bindPopup("<b>Location</b><br>Latitude: {{ $data['photo']['latitude'] }}<br>Longitude: {{ $data['photo']['longitude'] }}").openPopup();
+    </script>
 </body>
 </html>
