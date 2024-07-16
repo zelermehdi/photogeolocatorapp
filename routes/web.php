@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\DirectionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +22,8 @@ Route::get('/', function () {
 Route::post('/photos/upload', [PhotoController::class, 'upload']);
 Route::get('/phpinfo', function () {
     phpinfo();
+});
+
+Route::get('/directions', function () {
+    return view('directions');
 });
